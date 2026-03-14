@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
- 
+
   :root {
     --bg: #f5f5f0;
     --white: #ffffff;
@@ -23,14 +23,14 @@
     --yellow: #ca8a04;
     --yellow-bg: #fef9c3;
   }
- 
+
   body {
     background: var(--bg);
     color: var(--text);
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
   }
- 
+
   /* NAV */
   nav {
     background: var(--white);
@@ -44,13 +44,13 @@
     top: 0;
     z-index: 100;
   }
- 
+
   .nav-left {
     display: flex;
     align-items: center;
     gap: 32px;
   }
- 
+
   .logo {
     font-size: 18px;
     font-weight: 700;
@@ -59,19 +59,19 @@
     align-items: center;
     gap: 8px;
   }
- 
+
   .logo-dot {
     width: 8px;
     height: 8px;
     background: var(--accent);
     border-radius: 50%;
   }
- 
+
   .nav-links {
     display: flex;
     gap: 4px;
   }
- 
+
   .nav-link {
     padding: 6px 12px;
     border-radius: 6px;
@@ -82,18 +82,18 @@
     transition: all 0.15s;
     text-decoration: none;
   }
- 
+
   .nav-link:hover, .nav-link.active {
     background: var(--bg);
     color: var(--text);
   }
- 
+
   .nav-right {
     display: flex;
     align-items: center;
     gap: 12px;
   }
- 
+
   .btn-secondary {
     padding: 7px 16px;
     border-radius: 8px;
@@ -106,9 +106,9 @@
     transition: all 0.15s;
     font-family: 'Inter', sans-serif;
   }
- 
+
   .btn-secondary:hover { background: var(--bg); }
- 
+
   .btn-primary {
     padding: 7px 16px;
     border-radius: 8px;
@@ -121,9 +121,9 @@
     transition: all 0.15s;
     font-family: 'Inter', sans-serif;
   }
- 
+
   .btn-primary:hover { background: #1e40af; }
- 
+
   .wallet-badge {
     padding: 6px 12px;
     border-radius: 8px;
@@ -134,14 +134,14 @@
     border: 1px solid #bbf7d0;
     display: none;
   }
- 
+
   /* MAIN */
   main {
     max-width: 1100px;
     margin: 0 auto;
     padding: 32px 24px;
   }
- 
+
   /* HERO BANNER */
   .hero-banner {
     background: var(--accent);
@@ -153,38 +153,38 @@
     justify-content: space-between;
     color: white;
   }
- 
+
   .hero-banner h1 {
     font-size: 28px;
     font-weight: 700;
     margin-bottom: 8px;
   }
- 
+
   .hero-banner p {
     font-size: 15px;
     opacity: 0.8;
   }
- 
+
   .hero-stats {
     display: flex;
     gap: 40px;
   }
- 
+
   .hero-stat {
     text-align: center;
   }
- 
+
   .hero-stat-val {
     font-size: 24px;
     font-weight: 700;
   }
- 
+
   .hero-stat-label {
     font-size: 12px;
     opacity: 0.7;
     margin-top: 2px;
   }
- 
+
   /* FILTERS */
   .filters {
     display: flex;
@@ -192,7 +192,7 @@
     justify-content: space-between;
     margin-bottom: 20px;
   }
- 
+
   .filter-tabs {
     display: flex;
     gap: 4px;
@@ -201,7 +201,7 @@
     border-radius: 8px;
     padding: 3px;
   }
- 
+
   .filter-tab {
     padding: 5px 14px;
     border-radius: 6px;
@@ -214,20 +214,20 @@
     background: none;
     font-family: 'Inter', sans-serif;
   }
- 
+
   .filter-tab.active {
     background: var(--white);
     color: var(--text);
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   }
- 
+
   /* MARKETS GRID */
   .markets-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
   }
- 
+
   /* MARKET CARD */
   .market-card {
     background: var(--white);
@@ -240,26 +240,26 @@
     flex-direction: column;
     gap: 14px;
   }
- 
+
   .market-card:hover {
     border-color: #d1d5db;
     box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     transform: translateY(-1px);
   }
- 
+
   .market-card.featured {
     grid-column: span 2;
     border-color: var(--accent);
     background: linear-gradient(135deg, #eff6ff, #ffffff);
   }
- 
+
   .card-top {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 12px;
   }
- 
+
   .card-category {
     font-size: 11px;
     font-weight: 600;
@@ -268,13 +268,13 @@
     padding: 3px 8px;
     border-radius: 4px;
   }
- 
+
   .cat-crypto { background: #fef3c7; color: #92400e; }
   .cat-sports { background: #dbeafe; color: #1e40af; }
   .cat-tech { background: #f3e8ff; color: #6b21a8; }
   .cat-politics { background: #fce7f3; color: #9d174d; }
   .cat-special { background: #dcfce7; color: #14532d; }
- 
+
   .card-status {
     font-size: 11px;
     font-weight: 600;
@@ -282,21 +282,21 @@
     border-radius: 4px;
     flex-shrink: 0;
   }
- 
+
   .status-live { background: #dcfce7; color: var(--yes); }
   .status-settled { background: #f3f4f6; color: var(--muted); }
- 
+
   .card-question {
     font-size: 15px;
     font-weight: 600;
     line-height: 1.4;
     color: var(--text);
   }
- 
+
   .featured .card-question {
     font-size: 18px;
   }
- 
+
   /* Odds bar */
   .odds-row {
     display: flex;
@@ -305,37 +305,37 @@
     font-weight: 600;
     margin-bottom: 6px;
   }
- 
+
   .odds-yes { color: var(--yes); }
   .odds-no { color: var(--no); }
- 
+
   .bar-track {
     height: 6px;
     background: #fee2e2;
     border-radius: 99px;
     overflow: hidden;
   }
- 
+
   .bar-fill {
     height: 100%;
     background: var(--yes);
     border-radius: 99px;
     transition: width 0.5s ease;
   }
- 
+
   /* Pool info */
   .pool-row {
     display: flex;
     gap: 8px;
   }
- 
+
   .pool-item {
     flex: 1;
     background: var(--bg);
     border-radius: 8px;
     padding: 8px 12px;
   }
- 
+
   .pool-label {
     font-size: 10px;
     font-weight: 600;
@@ -344,22 +344,22 @@
     color: var(--muted);
     margin-bottom: 2px;
   }
- 
+
   .pool-value {
     font-size: 14px;
     font-weight: 700;
   }
- 
+
   .pool-value.yes { color: var(--yes); }
   .pool-value.no { color: var(--no); }
   .pool-value.total { color: var(--text); }
- 
+
   /* Bet buttons */
   .bet-row {
     display: flex;
     gap: 8px;
   }
- 
+
   .bet-btn {
     flex: 1;
     padding: 8px;
@@ -371,34 +371,34 @@
     transition: all 0.15s;
     font-family: 'Inter', sans-serif;
   }
- 
+
   .bet-yes {
     background: var(--yes-bg);
     color: var(--yes);
     border: 1px solid #bbf7d0;
   }
- 
+
   .bet-yes:hover:not(:disabled) {
     background: var(--yes);
     color: white;
   }
- 
+
   .bet-no {
     background: var(--no-bg);
     color: var(--no);
     border: 1px solid #fecaca;
   }
- 
+
   .bet-no:hover:not(:disabled) {
     background: var(--no);
     color: white;
   }
- 
+
   .bet-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
- 
+
   .outcome-banner {
     padding: 10px 14px;
     border-radius: 8px;
@@ -406,10 +406,10 @@
     font-weight: 600;
     text-align: center;
   }
- 
+
   .outcome-yes { background: var(--yes-bg); color: var(--yes); }
   .outcome-no { background: var(--no-bg); color: var(--no); }
- 
+
   /* MODAL */
   .modal-overlay {
     position: fixed;
@@ -424,12 +424,12 @@
     pointer-events: none;
     transition: opacity 0.2s;
   }
- 
+
   .modal-overlay.open {
     opacity: 1;
     pointer-events: all;
   }
- 
+
   .modal {
     background: var(--white);
     border-radius: 16px;
@@ -440,23 +440,23 @@
     transform: translateY(10px);
     transition: transform 0.2s;
   }
- 
+
   .modal-overlay.open .modal {
     transform: translateY(0);
   }
- 
+
   .modal-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 20px;
   }
- 
+
   .modal-title {
     font-size: 17px;
     font-weight: 700;
   }
- 
+
   .modal-close {
     width: 28px;
     height: 28px;
@@ -471,7 +471,7 @@
     color: var(--muted);
     font-family: 'Inter', sans-serif;
   }
- 
+
   .modal-question {
     font-size: 15px;
     font-weight: 600;
@@ -482,13 +482,13 @@
     background: var(--bg);
     border-radius: 8px;
   }
- 
+
   .modal-odds {
     display: flex;
     gap: 8px;
     margin-bottom: 20px;
   }
- 
+
   .modal-odd {
     flex: 1;
     padding: 12px;
@@ -498,45 +498,45 @@
     border: 2px solid transparent;
     transition: all 0.15s;
   }
- 
+
   .modal-odd.yes-odd {
     background: var(--yes-bg);
     border-color: #bbf7d0;
   }
- 
+
   .modal-odd.no-odd {
     background: var(--no-bg);
     border-color: #fecaca;
   }
- 
+
   .modal-odd.selected.yes-odd { border-color: var(--yes); }
   .modal-odd.selected.no-odd { border-color: var(--no); }
- 
+
   .modal-odd-label {
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
     margin-bottom: 4px;
   }
- 
+
   .yes-odd .modal-odd-label { color: var(--yes); }
   .no-odd .modal-odd-label { color: var(--no); }
- 
+
   .modal-odd-pct {
     font-size: 22px;
     font-weight: 700;
   }
- 
+
   .yes-odd .modal-odd-pct { color: var(--yes); }
   .no-odd .modal-odd-pct { color: var(--no); }
- 
+
   .modal-input-label {
     font-size: 13px;
     font-weight: 600;
     color: var(--muted);
     margin-bottom: 8px;
   }
- 
+
   .modal-input-wrap {
     display: flex;
     align-items: center;
@@ -545,7 +545,7 @@
     overflow: hidden;
     margin-bottom: 16px;
   }
- 
+
   .modal-input-prefix {
     padding: 10px 14px;
     background: var(--bg);
@@ -554,7 +554,7 @@
     font-weight: 600;
     color: var(--muted);
   }
- 
+
   .modal-input {
     flex: 1;
     padding: 10px 14px;
@@ -565,7 +565,7 @@
     font-family: 'Inter', sans-serif;
     color: var(--text);
   }
- 
+
   .modal-confirm-btn {
     width: 100%;
     padding: 12px;
@@ -577,20 +577,20 @@
     font-family: 'Inter', sans-serif;
     transition: all 0.15s;
   }
- 
+
   .modal-confirm-btn.yes-confirm {
     background: var(--yes);
     color: white;
   }
- 
+
   .modal-confirm-btn.no-confirm {
     background: var(--no);
     color: white;
   }
- 
+
   .modal-confirm-btn:hover { opacity: 0.9; }
   .modal-confirm-btn:disabled { opacity: 0.5; cursor: not-allowed; }
- 
+
   /* CLAIM MODAL */
   .claim-info {
     background: var(--yes-bg);
@@ -600,19 +600,19 @@
     margin-bottom: 16px;
     text-align: center;
   }
- 
+
   .claim-amount {
     font-size: 28px;
     font-weight: 700;
     color: var(--yes);
   }
- 
+
   .claim-label {
     font-size: 13px;
     color: var(--yes);
     margin-top: 4px;
   }
- 
+
   /* TOAST */
   #toast {
     position: fixed;
@@ -630,15 +630,15 @@
     transition: all 0.3s ease;
     max-width: 320px;
   }
- 
+
   #toast.show {
     transform: translateY(0);
     opacity: 1;
   }
- 
+
   #toast.success { background: var(--yes); }
   #toast.error { background: var(--no); }
- 
+
   .spinner {
     display: inline-block;
     width: 13px;
@@ -650,30 +650,61 @@
     vertical-align: middle;
     margin-right: 6px;
   }
- 
+
   @keyframes spin { to { transform: rotate(360deg); } }
- 
+
   /* Volume badge */
   .vol-badge {
     font-size: 12px;
     color: var(--muted);
     font-weight: 500;
   }
- 
+
   .card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
- 
+
   .end-time {
     font-size: 11px;
     color: var(--muted);
   }
+
+  @media (max-width: 768px) {
+    nav {
+      padding: 0 16px;
+    }
+    .nav-links { display: none; }
+    .hero-banner {
+      flex-direction: column;
+      gap: 20px;
+      padding: 24px 20px;
+    }
+    .hero-banner h1 { font-size: 22px; }
+    .hero-stats { gap: 20px; justify-content: space-around; width: 100%; }
+    .hero-stat-val { font-size: 18px; }
+    main { padding: 16px; }
+    .markets-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .market-card.featured {
+      grid-column: span 1 !important;
+    }
+    .filters {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .pool-row { flex-wrap: wrap; }
+    .pool-item { min-width: calc(50% - 4px); }
+    .modal { padding: 20px; }
+    .modal-odds { gap: 8px; }
+  }
 </style>
 </head>
 <body>
- 
+
 <nav>
   <div class="nav-left">
     <div class="logo">
@@ -690,7 +721,7 @@
     <button class="btn-secondary" id="connectBtn" onclick="connectWallet()">Connect wallet</button>
   </div>
 </nav>
- 
+
 <main>
   <div class="hero-banner">
     <div>
@@ -712,7 +743,7 @@
       </div>
     </div>
   </div>
- 
+
   <div class="filters">
     <div class="filter-tabs">
       <button class="filter-tab active">All</button>
@@ -721,13 +752,13 @@
     </div>
     <div class="vol-badge" id="totalVolBadge">Loading markets...</div>
   </div>
- 
+
   <div id="marketsSection">
     <div class="markets-grid" id="marketsGrid">
       <!-- Markets rendered here -->
     </div>
   </div>
- 
+
   <div id="activitySection" style="display:none">
     <div style="background:white;border-radius:12px;border:1px solid #e8e8e0;overflow:hidden;">
       <div style="padding:20px 24px;border-bottom:1px solid #e8e8e0;">
@@ -738,7 +769,7 @@
     </div>
   </div>
 </main>
- 
+
 <!-- BET MODAL -->
 <div class="modal-overlay" id="betModal">
   <div class="modal">
@@ -767,7 +798,7 @@
     </button>
   </div>
 </div>
- 
+
 <!-- CLAIM MODAL -->
 <div class="modal-overlay" id="claimModal">
   <div class="modal">
@@ -785,14 +816,14 @@
     </button>
   </div>
 </div>
- 
+
 <div id="toast"></div>
- 
+
 <script>
 const CONTRACT_ADDRESS = "0x52D4E231FfDe09a977925ca67e7f85bfd7E4382a";
 const SEPOLIA_CHAIN_ID = "0xaa36a7";
 const INFURA_URL = "https://sepolia.infura.io/v3/8b0530e193cc49a48a5866b599883e60";
- 
+
 const ABI = [
   {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
   {"inputs":[{"internalType":"string","name":"_question","type":"string"},{"internalType":"uint256","name":"_durationSeconds","type":"uint256"}],"name":"createMarket","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},
@@ -806,7 +837,7 @@ const ABI = [
   {"inputs":[],"name":"accumulatedFees","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
   {"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
 ];
- 
+
 // Market metadata (categories, etc.)
 const MARKET_META = {
   0: { category: 'crypto',   catLabel: 'Crypto',      featured: false, hidden: false, displayId: 0 },
@@ -816,19 +847,19 @@ const MARKET_META = {
   4: { category: 'crypto',   catLabel: 'Crypto',      featured: false, hidden: false, displayId: 3 },
   5: { category: 'special',  catLabel: '🎓 Special',  featured: true,  hidden: false, displayId: 4 },
 };
- 
+
 let provider, signer, contract, readContract, userAddress;
 let currentMarketId, currentSide;
 let markets = [];
 let userBets = {}; // { marketId: { yes: amount, no: amount } }
- 
+
 function showToast(msg, type = '') {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.className = `show ${type}`;
   setTimeout(() => { t.className = ''; }, 4000);
 }
- 
+
 async function connectWallet() {
   if (!window.ethereum) {
     showToast('MetaMask not found. Please install it.', 'error');
@@ -849,23 +880,23 @@ async function connectWallet() {
     provider = new ethers.providers.Web3Provider(window.ethereum);
     signer = provider.getSigner();
     contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
- 
+
     document.getElementById('connectBtn').style.display = 'none';
     const badge = document.getElementById('walletBadge');
     badge.style.display = 'block';
     badge.textContent = userAddress.slice(0,6) + '...' + userAddress.slice(-4) + ' ✓';
- 
+
     showToast('Wallet connected!', 'success');
     renderMarkets();
   } catch(e) {
     showToast('Connection failed', 'error');
   }
 }
- 
+
 function formatEth(wei) {
   return parseFloat(ethers.utils.formatEther(wei)).toFixed(4);
 }
- 
+
 async function loadMarkets() {
   const count = await readContract.marketCount();
   const total = count.toNumber();
@@ -897,13 +928,13 @@ async function loadMarkets() {
     if (stored) userBets = JSON.parse(stored);
   }
 }
- 
+
 function saveUserBet(marketId, side, amount) {
   if (!userBets[marketId]) userBets[marketId] = { yes: 0, no: 0 };
   userBets[marketId][side] += parseFloat(amount);
   if (userAddress) localStorage.setItem('g6bets_' + userAddress.toLowerCase(), JSON.stringify(userBets));
 }
- 
+
 function userWonMarket(m) {
   if (!userAddress || !m.resolved) return false;
   const bets = userBets[m.id];
@@ -912,12 +943,12 @@ function userWonMarket(m) {
   if (!m.outcomeYes && bets.no > 0) return true;
   return false;
 }
- 
+
 function yesPct(m) {
   if (m.total === 0) return 50;
   return Math.round(m.totalYes / m.total * 100);
 }
- 
+
 function renderMarkets() {
   const grid = document.getElementById('marketsGrid');
   grid.innerHTML = '';
@@ -927,10 +958,10 @@ function renderMarkets() {
     const displayId = meta.displayId !== null ? meta.displayId : m.id;
     const pct = yesPct(m);
     const isLive = !m.resolved;
- 
+
     const card = document.createElement('div');
     card.className = 'market-card' + (meta.featured ? ' featured' : '');
- 
+
     const endDate = new Date(m.endTime * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     const now = Math.floor(Date.now() / 1000);
     const secsLeft = m.endTime - now;
@@ -946,7 +977,7 @@ function renderMarkets() {
     } else {
       timeLabel = 'Ended ' + endDate;
     }
- 
+
     let actionHTML = '';
     if (isLive) {
       actionHTML = `
@@ -961,7 +992,7 @@ function renderMarkets() {
         <div class="outcome-banner ${outcomeClass}">${outcomeText} · Final pot: ${m.total.toFixed(4)} ETH</div>
         ${userAddress ? `<button class="bet-btn bet-yes" style="width:100%" onclick="openClaimModal(${m.id}, event)">Claim Winnings</button>` : ''}`;
     }
- 
+
     card.innerHTML = `
       <div class="card-top">
         <span class="card-category cat-${meta.category}">${meta.catLabel}</span>
@@ -1000,7 +1031,7 @@ function renderMarkets() {
     grid.appendChild(card);
   });
 }
- 
+
 // BET MODAL
 function openBetModal(marketId, side, e) {
   e.stopPropagation();
@@ -1015,7 +1046,7 @@ function openBetModal(marketId, side, e) {
   selectSide(side);
   document.getElementById('betModal').classList.add('open');
 }
- 
+
 function selectSide(side) {
   currentSide = side;
   document.getElementById('modalYesOdd').classList.toggle('selected', side === 'yes');
@@ -1024,11 +1055,11 @@ function selectSide(side) {
   btn.textContent = `Bet ${side.toUpperCase()}`;
   btn.className = `modal-confirm-btn ${side}-confirm`;
 }
- 
+
 function closeModal() {
   document.getElementById('betModal').classList.remove('open');
 }
- 
+
 async function confirmBet() {
   const amount = document.getElementById('betAmount').value;
   const btn = document.getElementById('confirmBetBtn');
@@ -1053,7 +1084,7 @@ async function confirmBet() {
     btn.disabled = false;
   }
 }
- 
+
 // CLAIM MODAL
 function openClaimModal(marketId, e) {
   e.stopPropagation();
@@ -1063,11 +1094,11 @@ function openClaimModal(marketId, e) {
   document.getElementById('claimAmount').textContent = (m.total * 0.95).toFixed(4) + ' ETH (est.)';
   document.getElementById('claimModal').classList.add('open');
 }
- 
+
 function closeClaimModal() {
   document.getElementById('claimModal').classList.remove('open');
 }
- 
+
 async function confirmClaim() {
   const btn = document.getElementById('confirmClaimBtn');
   btn.innerHTML = '<span class="spinner"></span>Claiming...';
@@ -1087,7 +1118,7 @@ async function confirmClaim() {
     btn.disabled = false;
   }
 }
- 
+
 // Section switcher
 function showSection(section) {
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -1096,7 +1127,7 @@ function showSection(section) {
   document.getElementById('activitySection').style.display = section === 'activity' ? '' : 'none';
   if (section === 'activity') renderActivity();
 }
- 
+
 const TRANSACTIONS = [
   { type: 'Deploy',          market: null, hash: null,  desc: 'Contract deployed to Sepolia' },
   { type: 'Create Market',   market: 0,    hash: null,  desc: 'Market #0 — Did Bitcoin reach $100,000 before end of 2025?' },
@@ -1116,7 +1147,7 @@ const TRANSACTIONS = [
   { type: 'Create Market',   market: 4,    hash: null,  desc: 'Market #4 — Will Group 6 get the highest grade in IE Blockchain class?' },
   { type: 'Bet YES',         market: 4,    hash: null,  desc: 'Market #4 — LIVE, open for bets' },
 ];
- 
+
 const TYPE_COLORS = {
   'Deploy':        '#1d4ed8',
   'Create Market': '#7c3aed',
@@ -1125,7 +1156,7 @@ const TYPE_COLORS = {
   'Resolve':       '#ca8a04',
   'Claim':         '#16a34a',
 };
- 
+
 function renderActivity() {
   const list = document.getElementById('activityList');
   list.innerHTML = TRANSACTIONS.map((tx, i) => `
@@ -1136,7 +1167,7 @@ function renderActivity() {
     </div>
   `).join('');
 }
- 
+
 // Live countdown
 function startCountdown() {
   setInterval(() => {
@@ -1154,7 +1185,7 @@ function startCountdown() {
     });
   }, 1000);
 }
- 
+
 // Filter tabs
 document.querySelectorAll('.filter-tab').forEach(tab => {
   tab.addEventListener('click', function() {
@@ -1162,7 +1193,7 @@ document.querySelectorAll('.filter-tab').forEach(tab => {
     this.classList.add('active');
   });
 });
- 
+
 // Init - load read-only
 const ethersScript = document.createElement('script');
 ethersScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js';
