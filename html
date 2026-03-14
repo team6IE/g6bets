@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G6 Bets — Prediction Markets</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+  :root {
+    --bg: #f5f5f0;
+    --white: #ffffff;
+    --border: #e8e8e0;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --yes: #16a34a;
+    --yes-bg: #dcfce7;
+    --no: #dc2626;
+    --no-bg: #fee2e2;
+    --accent: #1d4ed8;
+    --accent-bg: #dbeafe;
+    --yellow: #ca8a04;
+    --yellow-bg: #fef9c3;
+  }
+ 
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+  }
+ 
+  /* NAV */
+  nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+ 
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+ 
+  .logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+ 
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+ 
+  .nav-links {
+    display: flex;
+    gap: 4px;
+  }
+ 
+  .nav-link {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+ 
+  .nav-link:hover, .nav-link.active {
+    background: var(--bg);
+    color: var(--text);
+  }
+ 
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+ 
+  .btn-secondary {
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid var(--border);
+    background: var(--white);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+ 
+  .btn-secondary:hover { background: var(--bg); }
+ 
+  .btn-primary {
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+ 
+  .btn-primary:hover { background: #1e40af; }
+ 
+  .wallet-badge {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--yes-bg);
+    color: var(--yes);
+    border: 1px solid #bbf7d0;
+    display: none;
+  }
+ 
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+ 
+  /* HERO BANNER */
+  .hero-banner {
+    background: var(--accent);
+    border-radius: 16px;
+    padding: 32px 40px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+  }
+ 
+  .hero-banner h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+ 
+  .hero-banner p {
+    font-size: 15px;
+    opacity: 0.8;
+  }
+ 
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+  }
+ 
+  .hero-stat {
+    text-align: center;
+  }
+ 
+  .hero-stat-val {
+    font-size: 24px;
+    font-weight: 700;
+  }
+ 
+  .hero-stat-label {
+    font-size: 12px;
+    opacity: 0.7;
+    margin-top: 2px;
+  }
+ 
+  /* FILTERS */
+  .filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+ 
+  .filter-tabs {
+    display: flex;
+    gap: 4px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+  }
+ 
+  .filter-tab {
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.15s;
+    border: none;
+    background: none;
+    font-family: 'Inter', sans-serif;
+  }
+ 
+  .filter-tab.active {
+    background: var(--white);
+    color: var(--text);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+ 
+  /* MARKETS GRID */
+  .markets-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+ 
+  /* MARKET CARD */
+  .market-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+ 
+  .market-card:hover {
+    border-color: #d1d5db;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transform: translateY(-1px);
+  }
+ 
+  .market-card.featured {
+    grid-column: span 2;
+    border-color: var(--accent);
+    background: linear-gradient(135deg, #eff6ff, #ffffff);
+  }
+ 
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+ 
+  .card-category {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+ 
+  .cat-crypto { background: #fef3c7; color: #92400e; }
+  .cat-sports { background: #dbeafe; color: #1e40af; }
+  .cat-tech { background: #f3e8ff; color: #6b21a8; }
+  .cat-politics { background: #fce7f3; color: #9d174d; }
+  .cat-special { background: #dcfce7; color: #14532d; }
+ 
+  .card-status {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+ 
+  .status-live { background: #dcfce7; color: var(--yes); }
+  .status-settled { background: #f3f4f6; color: var(--muted); }
+ 
+  .card-question {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--text);
+  }
+ 
+  .featured .card-question {
+    font-size: 18px;
+  }
+ 
+  /* Odds bar */
+  .odds-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+ 
+  .odds-yes { color: var(--yes); }
+  .odds-no { color: var(--no); }
+ 
+  .bar-track {
+    height: 6px;
+    background: #fee2e2;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+ 
+  .bar-fill {
+    height: 100%;
+    background: var(--yes);
+    border-radius: 99px;
+    transition: width 0.5s ease;
+  }
+ 
+  /* Pool info */
+  .pool-row {
+    display: flex;
+    gap: 8px;
+  }
+ 
+  .pool-item {
+    flex: 1;
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+ 
+  .pool-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    margin-bottom: 2px;
+  }
+ 
+  .pool-value {
+    font-size: 14px;
+    font-weight: 700;
+  }
+ 
+  .pool-value.yes { color: var(--yes); }
+  .pool-value.no { color: var(--no); }
+  .pool-value.total { color: var(--text); }
+ 
+  /* Bet buttons */
+  .bet-row {
+    display: flex;
+    gap: 8px;
+  }
+ 
+  .bet-btn {
+    flex: 1;
+    padding: 8px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+  }
+ 
+  .bet-yes {
+    background: var(--yes-bg);
+    color: var(--yes);
+    border: 1px solid #bbf7d0;
+  }
+ 
+  .bet-yes:hover:not(:disabled) {
+    background: var(--yes);
+    color: white;
+  }
+ 
+  .bet-no {
+    background: var(--no-bg);
+    color: var(--no);
+    border: 1px solid #fecaca;
+  }
+ 
+  .bet-no:hover:not(:disabled) {
+    background: var(--no);
+    color: white;
+  }
+ 
+  .bet-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+ 
+  .outcome-banner {
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+  }
+ 
+  .outcome-yes { background: var(--yes-bg); color: var(--yes); }
+  .outcome-no { background: var(--no-bg); color: var(--no); }
+ 
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+ 
+  .modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+  }
+ 
+  .modal {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 28px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    transform: translateY(10px);
+    transition: transform 0.2s;
+  }
+ 
+  .modal-overlay.open .modal {
+    transform: translateY(0);
+  }
+ 
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+ 
+  .modal-title {
+    font-size: 17px;
+    font-weight: 700;
+  }
+ 
+  .modal-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-family: 'Inter', sans-serif;
+  }
+ 
+  .modal-question {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 20px;
+    line-height: 1.4;
+    padding: 12px 16px;
+    background: var(--bg);
+    border-radius: 8px;
+  }
+ 
+  .modal-odds {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+ 
+  .modal-odd {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.15s;
+  }
+ 
+  .modal-odd.yes-odd {
+    background: var(--yes-bg);
+    border-color: #bbf7d0;
+  }
+ 
+  .modal-odd.no-odd {
+    background: var(--no-bg);
+    border-color: #fecaca;
+  }
+ 
+  .modal-odd.selected.yes-odd { border-color: var(--yes); }
+  .modal-odd.selected.no-odd { border-color: var(--no); }
+ 
+  .modal-odd-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+ 
+  .yes-odd .modal-odd-label { color: var(--yes); }
+  .no-odd .modal-odd-label { color: var(--no); }
+ 
+  .modal-odd-pct {
+    font-size: 22px;
+    font-weight: 700;
+  }
+ 
+  .yes-odd .modal-odd-pct { color: var(--yes); }
+  .no-odd .modal-odd-pct { color: var(--no); }
+ 
+  .modal-input-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+ 
+  .modal-input-wrap {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+ 
+  .modal-input-prefix {
+    padding: 10px 14px;
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--muted);
+  }
+ 
+  .modal-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+  }
+ 
+  .modal-confirm-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s;
+  }
+ 
+  .modal-confirm-btn.yes-confirm {
+    background: var(--yes);
+    color: white;
+  }
+ 
+  .modal-confirm-btn.no-confirm {
+    background: var(--no);
+    color: white;
+  }
+ 
+  .modal-confirm-btn:hover { opacity: 0.9; }
+  .modal-confirm-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+ 
+  /* CLAIM MODAL */
+  .claim-info {
+    background: var(--yes-bg);
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+ 
+  .claim-amount {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--yes);
+  }
+ 
+  .claim-label {
+    font-size: 13px;
+    color: var(--yes);
+    margin-top: 4px;
+  }
+ 
+  /* TOAST */
+  #toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--text);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 300;
+    transform: translateY(80px);
+    opacity: 0;
+    transition: all 0.3s ease;
+    max-width: 320px;
+  }
+ 
+  #toast.show {
+    transform: translateY(0);
+    opacity: 1;
+  }
+ 
+  #toast.success { background: var(--yes); }
+  #toast.error { background: var(--no); }
+ 
+  .spinner {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+  }
+ 
+  @keyframes spin { to { transform: rotate(360deg); } }
+ 
+  /* Volume badge */
+  .vol-badge {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+ 
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+ 
+  .end-time {
+    font-size: 11px;
+    color: var(--muted);
+  }
+</style>
+</head>
+<body>
+ 
+<nav>
+  <div class="nav-left">
+    <div class="logo">
+      <div class="logo-dot"></div>
+      G6 Bets
+    </div>
+    <div class="nav-links">
+      <a class="nav-link active" onclick="showSection('markets')">Markets</a>
+      <a class="nav-link" onclick="showSection('activity')">Activity</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="wallet-badge" id="walletBadge"></div>
+    <button class="btn-secondary" id="connectBtn" onclick="connectWallet()">Connect wallet</button>
+  </div>
+</nav>
+ 
+<main>
+  <div class="hero-banner">
+    <div>
+      <h1>G6 Bets</h1>
+      <p>Decentralized prediction markets on Ethereum · Sepolia Testnet</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val" id="heroVolume">0.00 ETH</div>
+        <div class="hero-stat-label">Total Volume</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val" id="heroMarkets">4</div>
+        <div class="hero-stat-label">Markets</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">Sepolia</div>
+        <div class="hero-stat-label">Network</div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="filters">
+    <div class="filter-tabs">
+      <button class="filter-tab active">All</button>
+      <button class="filter-tab">Live</button>
+      <button class="filter-tab">Settled</button>
+    </div>
+    <div class="vol-badge" id="totalVolBadge">Loading markets...</div>
+  </div>
+ 
+  <div id="marketsSection">
+    <div class="markets-grid" id="marketsGrid">
+      <!-- Markets rendered here -->
+    </div>
+  </div>
+ 
+  <div id="activitySection" style="display:none">
+    <div style="background:white;border-radius:12px;border:1px solid #e8e8e0;overflow:hidden;">
+      <div style="padding:20px 24px;border-bottom:1px solid #e8e8e0;">
+        <h2 style="font-size:16px;font-weight:700;">On-chain Activity</h2>
+        <p style="font-size:13px;color:#6b7280;margin-top:4px;">All transactions verified on Sepolia Etherscan</p>
+      </div>
+      <div id="activityList"></div>
+    </div>
+  </div>
+</main>
+ 
+<!-- BET MODAL -->
+<div class="modal-overlay" id="betModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modalTitle">Place a bet</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-question" id="modalQuestion"></div>
+    <div class="modal-odds">
+      <div class="modal-odd yes-odd selected" id="modalYesOdd" onclick="selectSide('yes')">
+        <div class="modal-odd-label">YES</div>
+        <div class="modal-odd-pct" id="modalYesPct">50%</div>
+      </div>
+      <div class="modal-odd no-odd" id="modalNoOdd" onclick="selectSide('no')">
+        <div class="modal-odd-label">NO</div>
+        <div class="modal-odd-pct" id="modalNoPct">50%</div>
+      </div>
+    </div>
+    <div class="modal-input-label">Amount to bet</div>
+    <div class="modal-input-wrap">
+      <div class="modal-input-prefix">ETH</div>
+      <input class="modal-input" id="betAmount" type="number" value="0.001" min="0.001" step="0.001">
+    </div>
+    <button class="modal-confirm-btn yes-confirm" id="confirmBetBtn" onclick="confirmBet()">
+      Bet YES
+    </button>
+  </div>
+</div>
+ 
+<!-- CLAIM MODAL -->
+<div class="modal-overlay" id="claimModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Claim Winnings</div>
+      <button class="modal-close" onclick="closeClaimModal()">✕</button>
+    </div>
+    <div class="modal-question" id="claimQuestion"></div>
+    <div class="claim-info">
+      <div class="claim-amount" id="claimAmount">— ETH</div>
+      <div class="claim-label">Estimated winnings</div>
+    </div>
+    <button class="modal-confirm-btn yes-confirm" id="confirmClaimBtn" onclick="confirmClaim()">
+      Claim Winnings
+    </button>
+  </div>
+</div>
+ 
+<div id="toast"></div>
+ 
+<script>
+const CONTRACT_ADDRESS = "0x52D4E231FfDe09a977925ca67e7f85bfd7E4382a";
+const SEPOLIA_CHAIN_ID = "0xaa36a7";
+const INFURA_URL = "https://sepolia.infura.io/v3/8b0530e193cc49a48a5866b599883e60";
+ 
+const ABI = [
+  {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
+  {"inputs":[{"internalType":"string","name":"_question","type":"string"},{"internalType":"uint256","name":"_durationSeconds","type":"uint256"}],"name":"createMarket","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"nonpayable","type":"function"},
+  {"inputs":[{"internalType":"uint256","name":"_marketId","type":"uint256"}],"name":"betYes","outputs":[],"stateMutability":"payable","type":"function"},
+  {"inputs":[{"internalType":"uint256","name":"_marketId","type":"uint256"}],"name":"betNo","outputs":[],"stateMutability":"payable","type":"function"},
+  {"inputs":[{"internalType":"uint256","name":"_marketId","type":"uint256"},{"internalType":"bool","name":"_outcomeYes","type":"bool"}],"name":"resolveMarket","outputs":[],"stateMutability":"nonpayable","type":"function"},
+  {"inputs":[{"internalType":"uint256","name":"_marketId","type":"uint256"}],"name":"claimWinnings","outputs":[],"stateMutability":"nonpayable","type":"function"},
+  {"inputs":[],"name":"withdrawCreatorFees","outputs":[],"stateMutability":"nonpayable","type":"function"},
+  {"inputs":[{"internalType":"uint256","name":"_marketId","type":"uint256"}],"name":"getMarketInfo","outputs":[{"internalType":"string","name":"question","type":"string"},{"internalType":"uint256","name":"endTime","type":"uint256"},{"internalType":"bool","name":"resolved","type":"bool"},{"internalType":"bool","name":"outcomeYes","type":"bool"},{"internalType":"uint256","name":"totalYes","type":"uint256"},{"internalType":"uint256","name":"totalNo","type":"uint256"}],"stateMutability":"view","type":"function"},
+  {"inputs":[],"name":"marketCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+  {"inputs":[],"name":"accumulatedFees","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+  {"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"}
+];
+ 
+// Market metadata (categories, etc.)
+const MARKET_META = {
+  0: { category: 'crypto',   catLabel: 'Crypto',      featured: false, hidden: false, displayId: 0 },
+  1: { category: 'sports',   catLabel: 'Sports',      featured: false, hidden: false, displayId: 1 },
+  2: { category: 'tech',     catLabel: 'Tech',        featured: false, hidden: false, displayId: 2 },
+  3: { category: 'crypto',   catLabel: 'Crypto',      featured: false, hidden: true,  displayId: null },
+  4: { category: 'crypto',   catLabel: 'Crypto',      featured: false, hidden: false, displayId: 3 },
+  5: { category: 'special',  catLabel: '🎓 Special',  featured: true,  hidden: false, displayId: 4 },
+};
+ 
+let provider, signer, contract, readContract, userAddress;
+let currentMarketId, currentSide;
+let markets = [];
+let userBets = {}; // { marketId: { yes: amount, no: amount } }
+ 
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `show ${type}`;
+  setTimeout(() => { t.className = ''; }, 4000);
+}
+ 
+async function connectWallet() {
+  if (!window.ethereum) {
+    showToast('MetaMask not found. Please install it.', 'error');
+    return;
+  }
+  try {
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    userAddress = accounts[0];
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: SEPOLIA_CHAIN_ID }]
+      });
+    } catch(e) {
+      showToast('Please switch to Sepolia in MetaMask', 'error');
+      return;
+    }
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    signer = provider.getSigner();
+    contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+ 
+    document.getElementById('connectBtn').style.display = 'none';
+    const badge = document.getElementById('walletBadge');
+    badge.style.display = 'block';
+    badge.textContent = userAddress.slice(0,6) + '...' + userAddress.slice(-4) + ' ✓';
+ 
+    showToast('Wallet connected!', 'success');
+    renderMarkets();
+  } catch(e) {
+    showToast('Connection failed', 'error');
+  }
+}
+ 
+function formatEth(wei) {
+  return parseFloat(ethers.utils.formatEther(wei)).toFixed(4);
+}
+ 
+async function loadMarkets() {
+  const count = await readContract.marketCount();
+  const total = count.toNumber();
+  markets = [];
+  let totalVol = 0;
+  for (let i = 0; i < total; i++) {
+    const info = await readContract.getMarketInfo(i);
+    const yes = parseFloat(ethers.utils.formatEther(info[4]));
+    const no = parseFloat(ethers.utils.formatEther(info[5]));
+    totalVol += yes + no;
+    markets.push({
+      id: i,
+      question: info[0],
+      endTime: info[1].toNumber(),
+      resolved: info[2],
+      outcomeYes: info[3],
+      totalYes: yes,
+      totalNo: no,
+      total: yes + no
+    });
+  }
+  markets = markets.filter(m => m.total > 0);
+  markets.reverse();
+  document.getElementById('heroVolume').textContent = totalVol.toFixed(4) + ' ETH';
+  document.getElementById('heroMarkets').textContent = total;
+  document.getElementById('totalVolBadge').textContent = `${total} markets · ${totalVol.toFixed(4)} ETH volume`;
+  if (userAddress) {
+    const stored = localStorage.getItem('g6bets_' + userAddress.toLowerCase());
+    if (stored) userBets = JSON.parse(stored);
+  }
+}
+ 
+function saveUserBet(marketId, side, amount) {
+  if (!userBets[marketId]) userBets[marketId] = { yes: 0, no: 0 };
+  userBets[marketId][side] += parseFloat(amount);
+  if (userAddress) localStorage.setItem('g6bets_' + userAddress.toLowerCase(), JSON.stringify(userBets));
+}
+ 
+function userWonMarket(m) {
+  if (!userAddress || !m.resolved) return false;
+  const bets = userBets[m.id];
+  if (!bets) return false;
+  if (m.outcomeYes && bets.yes > 0) return true;
+  if (!m.outcomeYes && bets.no > 0) return true;
+  return false;
+}
+ 
+function yesPct(m) {
+  if (m.total === 0) return 50;
+  return Math.round(m.totalYes / m.total * 100);
+}
+ 
+function renderMarkets() {
+  const grid = document.getElementById('marketsGrid');
+  grid.innerHTML = '';
+  markets.forEach(m => {
+    const meta = MARKET_META[m.id] || { category: 'crypto', catLabel: 'Crypto', featured: false, hidden: false, displayId: m.id };
+    if (meta.hidden) return;
+    const displayId = meta.displayId !== null ? meta.displayId : m.id;
+    const pct = yesPct(m);
+    const isLive = !m.resolved;
+ 
+    const card = document.createElement('div');
+    card.className = 'market-card' + (meta.featured ? ' featured' : '');
+ 
+    const endDate = new Date(m.endTime * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    const now = Math.floor(Date.now() / 1000);
+    const secsLeft = m.endTime - now;
+    let timeLabel = '';
+    if (isLive && secsLeft > 0) {
+      const mins = Math.floor(secsLeft / 60);
+      const secs = secsLeft % 60;
+      if (mins > 60) timeLabel = `Closes in ${Math.floor(mins/60)}h ${mins%60}m`;
+      else if (mins > 0) timeLabel = `Closes in ${mins}m ${secs}s`;
+      else timeLabel = `Closes in ${secs}s`;
+    } else if (isLive) {
+      timeLabel = 'Closing soon...';
+    } else {
+      timeLabel = 'Ended ' + endDate;
+    }
+ 
+    let actionHTML = '';
+    if (isLive) {
+      actionHTML = `
+        <div class="bet-row">
+          <button class="bet-btn bet-yes" onclick="openBetModal(${m.id}, 'yes', event)" ${!userAddress ? 'disabled' : ''}>Bet YES</button>
+          <button class="bet-btn bet-no" onclick="openBetModal(${m.id}, 'no', event)" ${!userAddress ? 'disabled' : ''}>Bet NO</button>
+        </div>`;
+    } else {
+      const outcomeClass = m.outcomeYes ? 'outcome-yes' : 'outcome-no';
+      const outcomeText = m.outcomeYes ? '✓ YES won' : '✗ NO won';
+      actionHTML = `
+        <div class="outcome-banner ${outcomeClass}">${outcomeText} · Final pot: ${m.total.toFixed(4)} ETH</div>
+        ${userAddress ? `<button class="bet-btn bet-yes" style="width:100%" onclick="openClaimModal(${m.id}, event)">Claim Winnings</button>` : ''}`;
+    }
+ 
+    card.innerHTML = `
+      <div class="card-top">
+        <span class="card-category cat-${meta.category}">${meta.catLabel}</span>
+        <span class="card-status ${isLive ? 'status-live' : 'status-settled'}">${isLive ? '● LIVE' : 'SETTLED'}</span>
+      </div>
+      <div class="card-question">${m.question}</div>
+      <div>
+        <div class="odds-row">
+          <span class="odds-yes">YES ${pct}%</span>
+          <span class="odds-no">NO ${100 - pct}%</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:${pct}%"></div>
+        </div>
+      </div>
+      <div class="pool-row">
+        <div class="pool-item">
+          <div class="pool-label">YES Pool</div>
+          <div class="pool-value yes">${m.totalYes.toFixed(4)} ETH</div>
+        </div>
+        <div class="pool-item">
+          <div class="pool-label">NO Pool</div>
+          <div class="pool-value no">${m.totalNo.toFixed(4)} ETH</div>
+        </div>
+        <div class="pool-item">
+          <div class="pool-label">Total</div>
+          <div class="pool-value total">${m.total.toFixed(4)} ETH</div>
+        </div>
+      </div>
+      ${actionHTML}
+      <div class="card-footer">
+        <span class="end-time" id="timer-${m.id}">${timeLabel}</span>
+        <span class="vol-badge">Market #${displayId}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+ 
+// BET MODAL
+function openBetModal(marketId, side, e) {
+  e.stopPropagation();
+  if (!userAddress) { showToast('Connect wallet first', 'error'); return; }
+  currentMarketId = marketId;
+  currentSide = side;
+  const m = markets.find(x => x.id === marketId);
+  const pct = yesPct(m);
+  document.getElementById('modalQuestion').textContent = m.question;
+  document.getElementById('modalYesPct').textContent = pct + '%';
+  document.getElementById('modalNoPct').textContent = (100 - pct) + '%';
+  selectSide(side);
+  document.getElementById('betModal').classList.add('open');
+}
+ 
+function selectSide(side) {
+  currentSide = side;
+  document.getElementById('modalYesOdd').classList.toggle('selected', side === 'yes');
+  document.getElementById('modalNoOdd').classList.toggle('selected', side === 'no');
+  const btn = document.getElementById('confirmBetBtn');
+  btn.textContent = `Bet ${side.toUpperCase()}`;
+  btn.className = `modal-confirm-btn ${side}-confirm`;
+}
+ 
+function closeModal() {
+  document.getElementById('betModal').classList.remove('open');
+}
+ 
+async function confirmBet() {
+  const amount = document.getElementById('betAmount').value;
+  const btn = document.getElementById('confirmBetBtn');
+  btn.innerHTML = '<span class="spinner"></span>Sending...';
+  btn.disabled = true;
+  try {
+    const value = ethers.utils.parseEther(amount);
+    const tx = currentSide === 'yes'
+      ? await contract.betYes(currentMarketId, { value })
+      : await contract.betNo(currentMarketId, { value });
+    showToast('Transaction sent, waiting...', '');
+    await tx.wait();
+    saveUserBet(currentMarketId, currentSide, amount);
+    showToast(`✓ ${currentSide.toUpperCase()} bet confirmed!`, 'success');
+    closeModal();
+    await loadMarkets();
+    renderMarkets();
+  } catch(e) {
+    showToast('Failed: ' + (e.reason || e.message), 'error');
+  } finally {
+    btn.innerHTML = `Bet ${currentSide.toUpperCase()}`;
+    btn.disabled = false;
+  }
+}
+ 
+// CLAIM MODAL
+function openClaimModal(marketId, e) {
+  e.stopPropagation();
+  currentMarketId = marketId;
+  const m = markets.find(x => x.id === marketId);
+  document.getElementById('claimQuestion').textContent = m.question;
+  document.getElementById('claimAmount').textContent = (m.total * 0.95).toFixed(4) + ' ETH (est.)';
+  document.getElementById('claimModal').classList.add('open');
+}
+ 
+function closeClaimModal() {
+  document.getElementById('claimModal').classList.remove('open');
+}
+ 
+async function confirmClaim() {
+  const btn = document.getElementById('confirmClaimBtn');
+  btn.innerHTML = '<span class="spinner"></span>Claiming...';
+  btn.disabled = true;
+  try {
+    const tx = await contract.claimWinnings(currentMarketId);
+    showToast('Claiming...', '');
+    await tx.wait();
+    showToast('✓ Winnings claimed!', 'success');
+    closeClaimModal();
+    await loadMarkets();
+    renderMarkets();
+  } catch(e) {
+    showToast('Failed: ' + (e.reason || e.message), 'error');
+  } finally {
+    btn.innerHTML = 'Claim Winnings';
+    btn.disabled = false;
+  }
+}
+ 
+// Section switcher
+function showSection(section) {
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('marketsSection').style.display = section === 'markets' ? '' : 'none';
+  document.getElementById('activitySection').style.display = section === 'activity' ? '' : 'none';
+  if (section === 'activity') renderActivity();
+}
+ 
+const TRANSACTIONS = [
+  { type: 'Deploy',          market: null, hash: null,  desc: 'Contract deployed to Sepolia' },
+  { type: 'Create Market',   market: 0,    hash: null,  desc: 'Market #0 — Did Bitcoin reach $100,000 before end of 2025?' },
+  { type: 'Bet YES',         market: 0,    hash: null,  desc: 'Market #0 — 0.005 ETH on YES' },
+  { type: 'Bet NO',          market: 0,    hash: null,  desc: 'Market #0 — 0.001 ETH on NO' },
+  { type: 'Resolve',         market: 0,    hash: null,  desc: 'Market #0 — Resolved YES ✓' },
+  { type: 'Claim',           market: 0,    hash: null,  desc: 'Market #0 — Winnings claimed' },
+  { type: 'Create Market',   market: 1,    hash: null,  desc: 'Market #1 — Did Real Madrid win La Liga 2024/25?' },
+  { type: 'Bet YES',         market: 1,    hash: null,  desc: 'Market #1 — 0.005 ETH on YES' },
+  { type: 'Resolve',         market: 1,    hash: null,  desc: 'Market #1 — Resolved NO ✓ (Barcelona won)' },
+  { type: 'Create Market',   market: 2,    hash: null,  desc: 'Market #2 — Did Apple release the iPhone 17 in September 2025?' },
+  { type: 'Bet YES',         market: 2,    hash: null,  desc: 'Market #2 — 0.016 ETH on YES' },
+  { type: 'Resolve',         market: 2,    hash: null,  desc: 'Market #2 — Resolved YES ✓' },
+  { type: 'Create Market',   market: 3,    hash: null,  desc: 'Market #3 — Did Ethereum close above $8,000 in Q4 2025?' },
+  { type: 'Bet NO',          market: 3,    hash: null,  desc: 'Market #3 — 0.015 ETH on NO' },
+  { type: 'Resolve',         market: 3,    hash: null,  desc: 'Market #3 — Resolved NO ✓' },
+  { type: 'Create Market',   market: 4,    hash: null,  desc: 'Market #4 — Will Group 6 get the highest grade in IE Blockchain class?' },
+  { type: 'Bet YES',         market: 4,    hash: null,  desc: 'Market #4 — LIVE, open for bets' },
+];
+ 
+const TYPE_COLORS = {
+  'Deploy':        '#1d4ed8',
+  'Create Market': '#7c3aed',
+  'Bet YES':       '#16a34a',
+  'Bet NO':        '#dc2626',
+  'Resolve':       '#ca8a04',
+  'Claim':         '#16a34a',
+};
+ 
+function renderActivity() {
+  const list = document.getElementById('activityList');
+  list.innerHTML = TRANSACTIONS.map((tx, i) => `
+    <div style="padding:14px 24px;border-bottom:1px solid #f3f4f6;display:flex;align-items:center;gap:16px;">
+      <span style="background:${TYPE_COLORS[tx.type]}15;color:${TYPE_COLORS[tx.type]};font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;min-width:100px;text-align:center">${tx.type}</span>
+      <span style="flex:1;font-size:13px;color:#374151">${tx.desc}</span>
+      <a href="https://sepolia.etherscan.io/address/0x52D4E231FfDe09a977925ca67e7f85bfd7E4382a" target="_blank" style="font-size:12px;color:#1d4ed8;text-decoration:none;font-weight:500">View on Etherscan →</a>
+    </div>
+  `).join('');
+}
+ 
+// Live countdown
+function startCountdown() {
+  setInterval(() => {
+    markets.forEach(m => {
+      if (m.resolved) return;
+      const el = document.getElementById('timer-' + m.id);
+      if (!el) return;
+      const secsLeft = m.endTime - Math.floor(Date.now() / 1000);
+      if (secsLeft <= 0) { el.textContent = 'Closing soon...'; return; }
+      const mins = Math.floor(secsLeft / 60);
+      const secs = secsLeft % 60;
+      if (mins > 60) el.textContent = 'Closes in ' + Math.floor(mins/60) + 'h ' + (mins%60) + 'm';
+      else if (mins > 0) el.textContent = 'Closes in ' + mins + 'm ' + secs + 's';
+      else el.textContent = 'Closes in ' + secs + 's';
+    });
+  }, 1000);
+}
+ 
+// Filter tabs
+document.querySelectorAll('.filter-tab').forEach(tab => {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+ 
+// Init - load read-only
+const ethersScript = document.createElement('script');
+ethersScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/ethers/5.7.2/ethers.umd.min.js';
+ethersScript.onload = async () => {
+  readContract = new ethers.Contract(
+    CONTRACT_ADDRESS, ABI,
+    new ethers.providers.JsonRpcProvider(INFURA_URL)
+  );
+  try {
+    await loadMarkets();
+    renderMarkets();
+    startCountdown();
+  } catch(e) {
+    document.getElementById('totalVolBadge').textContent = 'Error loading markets';
+  }
+};
+document.head.appendChild(ethersScript);
+</script>
+</body>
+</html>
